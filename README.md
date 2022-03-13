@@ -51,14 +51,14 @@ Quickly install packages from existed requirements.txt file
 (venv) > pip install -r requirements.txt
 ```
 
-# Lambda test and debug
+# local lambda test and debug
 
 To test or debug my lambda:
 ```
 (venv) python test_lambda.py
 ```
 
-# Lambda packaging
+# lambda packaging to zip file
 
 We copy another `requirements-lambda.txt` for neccessary-only packages on AWS
 
@@ -67,6 +67,7 @@ Set execute permission for my scripts
 chmod +x x1_zip_lambda.sh
 chmod +x x2_upload_s3.sh
 chmod +x x3_create_stack.sh
+chmod +x x4_update_stack.sh
 ```
 
 Run this command to create Zip file
@@ -81,7 +82,7 @@ After we have zip file for lambda, we need to upload to S3 Bucket
 ./x2_upload_s3.sh
 ```
 
-# Lambda deployment
+# lambda deployment to aws
 
 To create new stack
 ```
@@ -98,7 +99,7 @@ aws cloudformation create-stack \
 
 aws cloudformation wait \
     stack-create-complete \
-    --stack-name 'vpc-lambda-dynamodb-demo-stack'
+    --stack-name 'vpc-lambda-dynamodb-demo-stack' \
     --profile tvt_admin
 ```
 
@@ -106,8 +107,13 @@ To update changes to stack
 ```
 aws cloudformation update-stack \
     --stack-name 'vpc-lambda-dynamodb-demo-stack' \
-    --template-body file://$(pwd)/cf.simple-scenario.yml \
+    --template-body file://$(pwd)/cloudformation.yml \
     --capabilities CAPABILITY_NAMED_IAM \
+    --profile tvt_admin
+
+aws cloudformation wait \
+    stack-update-complete \
+    --stack-name 'vpc-lambda-dynamodb-demo-stack' \
     --profile tvt_admin
 ```
 
@@ -117,10 +123,15 @@ To delete stack and clean up everything, run the following command:
 aws cloudformation delete-stack \
     --stack-name 'vpc-lambda-dynamodb-demo-stack' \
     --profile tvt_admin
+
+aws cloudformation wait \
+    stack-delete-complete \
+    --stack-name 'vpc-lambda-dynamodb-demo-stack' \
+    --profile tvt_admin
 ```
 
 
-# Test Lambda
+# test lambda remotely
 
 We can invoke the function manually to test it works:
 

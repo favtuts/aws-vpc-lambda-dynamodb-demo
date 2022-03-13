@@ -98,7 +98,7 @@ Resources:
           KeyName: !Ref DynamoDBPKName
       Code:
           S3Bucket: 'tvt-artifacts-bucket'
-          S3Key: 'lambdas/vpc-lambda-dynamodb-demo.zip'
+          S3Key: 'lambdas/vpc-lambda-dynamodb-demo-2022031301.zip'
   
   DynamoDBTable:
     Type: AWS::DynamoDB::Table
