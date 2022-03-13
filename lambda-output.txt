@@ -1,0 +1,1 @@
+{"headers": {"Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with,x-id-token,x-refresh-token,x-last-login", "Access-Control-Allow-Methods": "OPTIONS, POST", "Access-Control-Allow-Origin": "*", "Allow": "OPTIONS, POST", "Content-Type": "application/json"}, "statusCode": 200, "body": "{\"response\": \"Hi, Warmly welcome\"}"}
