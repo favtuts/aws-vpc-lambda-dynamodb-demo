@@ -45,6 +45,9 @@ Resources:
       Description: An execution role for a Lambda function launched by CloudFormation
       ManagedPolicyArns:
         - !Ref LambdaPolicy
+        - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+        - "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+        - "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -99,6 +102,12 @@ Resources:
       Code:
           S3Bucket: 'tvt-artifacts-bucket'
           S3Key: 'lambdas/vpc-lambda-dynamodb-demo-2022031301.zip'
+      VpcConfig:
+        SecurityGroupIds: # Refer to NAT-SG (sg-03f38c8d399b68593) or Default-SG (sg-0e942689489d32c9f)
+          - sg-03f38c8d399b68593
+        SubnetIds:  # 2 Private subnets
+          - subnet-02a5ac68178414a7b  # Private subnet A
+          - subnet-01a57a62b647fe4f4  # Private subnet B
   
   DynamoDBTable:
     Type: AWS::DynamoDB::Table
